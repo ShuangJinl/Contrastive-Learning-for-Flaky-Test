@@ -1,29 +1,34 @@
 import os
+import sys
+if len(sys.argv) < 3:
+    print("Error: Please provide the dataset name as the first argument, and GPU ID as the second argument.")
+    print("Usage: python your_script.py IDoFT 0")
+    sys.exit(1)
 
 test_only = True
 projects = False
  
 # ====================================
-
-# 2. 路径配置
+dataset = sys.argv[1]
+# 2. Path Configuration
 if projects:
     fix = "_projects"
 else:
     fix = ""
 llama_model_path = "../model/qwen-coder-base"
-train_pair_path = f"../../new_dataset{fix}/IDoFT/flaky_train_s.csv"
-test_pair_path = f"../../new_dataset{fix}/IDoFT/flaky_test.csv"
-code_path = f"../../new_dataset{fix}/IDoFT/flaky_db.csv"
+train_pair_path = f"../../new_dataset{fix}/{dataset}/flaky_train_s.csv"
+test_pair_path = f"../../new_dataset{fix}/{dataset}/flaky_test.csv"
+code_path = f"../../new_dataset{fix}/{dataset}/flaky_db.csv"
 
-# 3. 根据 test_only 自动决定 save_dir 和 命令行参数
+# 3. Determine save_dir and test_only_arg
 if test_only:
-    save_dir = f"saved_models{fix}/test_only/IDoFT/"
+    save_dir = f"saved_models{fix}/test_only/{dataset}/"
     test_only_arg = "--test_only" 
 else:
-    save_dir = f"saved_models{fix}/full/IDoFT/"
+    save_dir = f"saved_models{fix}/full/{dataset}/"
     test_only_arg = ""            
 
-# 4. 根据 use_project_split 决定参数
+# 4. Determine split_arg and split_note
 if projects:
     split_arg = "--project_split"
     split_note = "Project-Level Split"
@@ -31,8 +36,8 @@ else:
     split_arg = ""
     split_note = "Random Split"
 
-# 5. 这里修改 GPU 编号
-GPU_ID = "0" 
+# 5. Set GPU_ID
+GPU_ID = sys.argv[2]
 
 # ===========================================
 
@@ -43,7 +48,7 @@ common_args = (
     f"--code_path={code_path} "
     f"--save_dir={save_dir} "
     f"--batch_size=2 "
-    f"--epochs=10 "
+    f"--epochs=7 "
     f"--lr=1e-5 "
     f"{test_only_arg} "
     f"{split_arg}" # 传递划分参数
