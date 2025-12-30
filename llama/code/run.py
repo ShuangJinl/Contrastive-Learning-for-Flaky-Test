@@ -27,6 +27,8 @@ def set_seed(seed=42):
     torch.cuda.manual_seed_all(seed)
 
 def calculate_metrics(labels, probs):
+    probs = np.nan_to_num(probs, nan=0.0)
+    
     if np.sum(probs) == 0 and np.max(probs) == 0:
         return {k: 0.0 for k in ["Accuracy", "F1", "AUC_PR", "F0.5", "Precision", "Recall"]}
         
@@ -309,7 +311,7 @@ class UnifiedCodeModel(nn.Module):
 
     def get_code_rep(self, ids, mask):
         out = self.llama_model(input_ids=ids, attention_mask=mask, output_hidden_states=True)
-        hidden = out.hidden_states[-1]
+        hidden = out.hidden_states[-1].to(torch.float32)
         mask_expanded = mask.unsqueeze(-1).float()
         sum_hidden = torch.sum(hidden * mask_expanded, dim=1)
         sum_mask = torch.clamp(mask_expanded.sum(dim=1), min=1e-9)
@@ -363,8 +365,8 @@ class LossCalculator:
 
     def calc_con_loss(self, z1, z2, labels, flag):
         sim = F.cosine_similarity(z1, z2)
-        loss = -torch.mean(flag * torch.log(torch.sigmoid(sim / self.model.temperature)) + 
-                          (1 - flag) * torch.log(1 - torch.sigmoid(sim / self.model.temperature)))
+        logits = sim / self.model.temperature
+        loss = F.binary_cross_entropy_with_logits(logits, flag)
         return loss
 
     def calc_sigmoid_loss(self, z_pair, labels):
