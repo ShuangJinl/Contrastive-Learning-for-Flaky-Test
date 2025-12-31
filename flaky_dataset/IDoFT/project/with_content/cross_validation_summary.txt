@@ -1,0 +1,40 @@
+五折交叉验证数据划分汇总
+==================================================
+
+总记录数: 2561
+总体正例比例: 69.86%
+
+整体训练集: 2304 条记录
+整体测试集: 257 条记录
+测试集项目: spring-data-couchbase, jackson-datatypes-collections, wro4j, alluxio, balana, weblogic-monitoring-exporter, flow, Slimefun4, kylin, riptide, jackson-dataformats-text, spring-cloud-kubernetes, burst, semanticvectors, hsac-fitnesse-fixtures, asyncload, pulsar, spring-data-cassandra, java-cas-client, cxf, FluentJPA, nexus-repository-helm, spring-data-ebean, db-scheduler, webdrivermanager, captivate-prime-aem-components, oryx, aries-cdi, Mapper, jReddit, cloudhopper-commons, cukes, jboot, archiva, rest-assured, r2dbc-mysql, guice, jmeter-datadog-backend-listener
+
+折1:
+  训练集大小: 1842 条记录
+  测试集大小: 52 条记录
+  测试集正例数: 37, 负例数: 15, 正例比例: 71.15%
+  训练集正例数: 1285, 负例数: 557, 正例比例: 69.76%
+
+折2:
+  训练集大小: 1842 条记录
+  测试集大小: 52 条记录
+  测试集正例数: 37, 负例数: 15, 正例比例: 71.15%
+  训练集正例数: 1285, 负例数: 557, 正例比例: 69.76%
+
+折3:
+  训练集大小: 1844 条记录
+  测试集大小: 51 条记录
+  测试集正例数: 36, 负例数: 15, 正例比例: 70.59%
+  训练集正例数: 1286, 负例数: 558, 正例比例: 69.74%
+
+折4:
+  训练集大小: 1844 条记录
+  测试集大小: 51 条记录
+  测试集正例数: 36, 负例数: 15, 正例比例: 70.59%
+  训练集正例数: 1286, 负例数: 558, 正例比例: 69.74%
+
+折5:
+  训练集大小: 1844 条记录
+  测试集大小: 51 条记录
+  测试集正例数: 36, 负例数: 15, 正例比例: 70.59%
+  训练集正例数: 1286, 负例数: 558, 正例比例: 69.74%
+

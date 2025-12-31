@@ -43,6 +43,7 @@ negative_count_total = (matched_data['label'] == 0).sum()
 print(f"\n总体正负例统计:")
 print(f"正例数 (1): {positive_count_total}, 比例: {positive_count_total/total_records:.2%}")
 print(f"负例数 (0): {negative_count_total}, 比例: {negative_count_total/total_records:.2%}")
+division_ratio = negative_count_total/total_records
 
 # 初始化变量
 best_combination = None
@@ -72,7 +73,7 @@ for _ in range(10000):  # 尝试多次随机组合
     
     # 计算与目标大小和正负例比例的差异
     size_diff = abs(selected_size - target_test_size) / target_test_size
-    ratio_diff = abs(positive_ratio - 0.03)  # 目标正例比例为70%
+    ratio_diff = abs(positive_ratio - division_ratio)  # 目标正例比例为70%
     
     # 综合评分（权重可以调整）
     score = 0.6 * size_diff + 0.4 * ratio_diff
